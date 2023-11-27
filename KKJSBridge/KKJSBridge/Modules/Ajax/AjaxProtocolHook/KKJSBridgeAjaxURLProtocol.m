@@ -194,6 +194,7 @@ static NSString * const kKKJSBridgeAjaxResponseHeaderAC = @"Access-Control-Allow
     // 清除缓存
     [self clearRequestBody];
     
+    
     if (error) {
         [self.client URLProtocol:self didFailWithError:error];
     } else {

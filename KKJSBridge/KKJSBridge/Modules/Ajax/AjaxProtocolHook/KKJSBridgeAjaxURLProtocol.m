@@ -108,7 +108,8 @@ static NSString * const kKKJSBridgeAjaxResponseHeaderAC = @"Access-Control-Allow
     NSArray<NSString *> *methods = @[@"GET"];
     if (mutableReqeust.HTTPMethod.length > 0 && ![methods containsObject:mutableReqeust.HTTPMethod]) {
         NSDictionary *bodyReqeust = [KKJSBridgeXMLBodyCacheRequest getRequestBody:requestId];
-        if (bodyReqeust) {
+        // 在跨域的情况下，非简单请求会先发起一次空body的OPTIONS请求，称为"预检"请求，用于向服务器请求权限信息，等预检请求被成功响应后，才发起真正的http请求。
+        if (bodyReqeust && ![mutableReqeust.HTTPMethod isEqualToString:@"OPTIONS"]) {
             // 从把缓存的 body 设置给 request
             [KKJSBridgeAjaxBodyHelper setBodyRequest:bodyReqeust toRequest:mutableReqeust];
         }

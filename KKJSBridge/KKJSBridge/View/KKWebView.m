@@ -131,6 +131,23 @@
     }
 }
 
+- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error {
+    id<WKNavigationDelegate> mainDelegate = self.realNavigationDelegate;
+
+    if ([mainDelegate respondsToSelector:@selector(webView:didFailProvisionalNavigation:withError:)]) {
+        [mainDelegate webView:webView didFailProvisionalNavigation:navigation withError:error];
+    }
+}
+
+// 跳转失败的时候调用
+- (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error {
+    id<WKNavigationDelegate> mainDelegate = self.realNavigationDelegate;
+
+    if ([mainDelegate respondsToSelector:@selector(webView:didFailNavigation:withError:)]) {
+        [mainDelegate webView:webView didFailNavigation:navigation withError:error];
+    }
+}
+
 #pragma mark - WKUIDelegate
 // 创建一个新的 webView
 - (nullable WKWebView *)webView:(WKWebView *)webView createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration forNavigationAction:(WKNavigationAction *)navigationAction windowFeatures:(WKWindowFeatures *)windowFeatures {

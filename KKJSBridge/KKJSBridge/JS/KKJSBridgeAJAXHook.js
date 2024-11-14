@@ -937,8 +937,12 @@
               var callback = this.callbackCache[callbackMessage.callbackId];
               if (callback) { // 执行 callback 回调，并删除缓存的 callback
                   callback(callbackMessage.data);
-                  this.callbackCache[callbackMessage.callbackId] = null;
-                  delete this.callbackCache[callbackMessage.callbackId];
+                  if (callbackMessage.data.type === "5000") {
+                      console.log(callbackMessage);
+                  } else {
+                      this.callbackCache[callbackMessage.callbackId] = null;
+                      delete this.callbackCache[callbackMessage.callbackId];
+                  }
               }
           }
           else if (callbackMessage.messageType === "event" /* Event */) { // 事件消息

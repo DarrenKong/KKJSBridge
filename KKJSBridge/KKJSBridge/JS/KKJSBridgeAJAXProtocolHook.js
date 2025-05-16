@@ -1160,7 +1160,7 @@
        * 利用 requestId 生成新的 url
        */
       _KKJSBridgeXHR.generateNewUrlWithRequestId = function (url, requestId) {
-          var orignAction = url;
+          var orignAction = encodeURI(decodeURI(url)); // 防止 url 里有中文字符
           // 通过 a 标签来辅助拼接新的 action
           var aTag = document.createElement("a");
           aTag.href = orignAction;

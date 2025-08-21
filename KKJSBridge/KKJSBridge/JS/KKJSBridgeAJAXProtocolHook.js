@@ -937,12 +937,8 @@
               var callback = this.callbackCache[callbackMessage.callbackId];
               if (callback) { // 执行 callback 回调，并删除缓存的 callback
                   callback(callbackMessage.data);
-                  if (callbackMessage.data.type === "5000") {
-                      console.log(callbackMessage);
-                  } else {
-                      this.callbackCache[callbackMessage.callbackId] = null;
-                      delete this.callbackCache[callbackMessage.callbackId];
-                  }
+                  this.callbackCache[callbackMessage.callbackId] = null;
+                  delete this.callbackCache[callbackMessage.callbackId];
               }
           }
           else if (callbackMessage.messageType === "event" /* Event */) { // 事件消息
@@ -1005,7 +1001,9 @@
           // 使用数组，支持多个观察者
           var obsevers = this.eventCallbackCache[eventName];
           if (obsevers) {
-              obsevers.push(callback);
+              if (eventName != 'IOSMallBridge') {
+                  obsevers.push(callback);
+              }
           }
           else {
               obsevers = [callback];
